@@ -59,3 +59,17 @@ Contributors
 * Mark Galloway
 * Abram Hindle
 * Cole Mackenzie
+
+Code Reference
+========================
+1. Abram Hindle, Hazel Victoria Campbell, Gary Dhillion
+
+    https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py
+    
+    Learn how to solve read_ws() and subscribe_socket(ws).
+    
+2. Abram Hindle, Rain Wu
+    
+    https://github.com/Rain981012/CMPUT404-assignment-ajax/blob/master/static/index.html
+    
+    Follow same design in assignment 4

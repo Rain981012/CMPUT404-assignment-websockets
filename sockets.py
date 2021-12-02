@@ -93,15 +93,20 @@ def hello():
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
     # XXX: TODO IMPLEMENT ME
-    while True:
-        message = ws.receive()
-        print("WS RECV: %s" % message)
-        if message == None:
-            break
-        else:
-            packet = json.loads(message)
-            for i in clients:
-                i.put(message)
+    try:
+        while True:
+            message = ws.receive()
+            print("WS RECV: %s" % message)
+            if message == None:
+                break
+            else:
+                packet = json.loads(message)
+                for i in packet:
+                    myWorld.set(i, packet[i])
+    except:
+        '''Done'''
+    return None
+
 
 
 @sockets.route('/subscribe')
@@ -111,6 +116,7 @@ def subscribe_socket(ws):
     # XXX: TODO IMPLEMENT ME
     # https://github.com/abramhindle/WebSocketsExamples/blob/master/chat.py line 81-93
     # right by Dr.Hindle
+    ws.send(json.dumps(myWorld.world()))
     client = Client()
     clients.append(client)
     g = gevent.spawn( read_ws, ws, client )
@@ -124,7 +130,7 @@ def subscribe_socket(ws):
     finally:
         clients.remove(client)
         gevent.kill(g)
-    return None
+
 
 
 # I give this to you, this is how you get the raw body/data portion of a post in flask
@@ -149,7 +155,7 @@ def update(entity):
 @app.route("/world", methods=['POST','GET'])    
 def world():
     '''you should probably return the world here'''
-    return None
+    return flask.jsonify(myWorld.world())
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
