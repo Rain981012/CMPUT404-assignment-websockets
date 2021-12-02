@@ -268,10 +268,11 @@ function wsSetup() {
         try {
             debug("WebSocket Recv:" + msg.data);
             //XXX: TODO What are you going to do here?
-            items = JSON.parse(msg.data)
+            items = JSON.parse(msg.data);
             for (var key in items){
             	world[key] = items[key]
-            }            
+            }
+            drawNextFrame();
         } catch (e) {
             alert("socket on message: " + e);
         }
